@@ -14,6 +14,11 @@ public class CourseController {
         return "Welcome to CourseApp";
     }
 
+    @GetMapping("/view")
+    public String ViewCourse(){
+        return "Welcome to Course View Page";
+    }
+
     @PostMapping(path="/add", consumes = "application/json", produces = "application/json")
     public String AddCourse(@RequestBody Course c){
         System.out.println(c.getTitle());
