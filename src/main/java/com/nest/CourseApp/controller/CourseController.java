@@ -1,32 +1,35 @@
 package com.nest.CourseApp.controller;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.nest.CourseApp.dao.CourseDao;
 import com.nest.CourseApp.model.Course;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParser;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CourseController {
-
+    @Autowired
+    private CourseDao dao;
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public String HomePage(){
         return "Welcome to CourseApp";
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/view")
-    public String ViewCourse(){
-        return "Welcome to Course View Page";
+    public List<Course> ViewCourse(){
+        return (List<Course>) dao.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(path="/add", consumes = "application/json", produces = "application/json")
     public String AddCourse(@RequestBody Course c){
-        System.out.println(c.getTitle());
-        System.out.println(c.getDescription());
-        System.out.println(c.getVenue());
-        System.out.println(c.getDuration());
-        System.out.println(c.getDate());
-        return "Welcome to CourseApp";
+        dao.save(c);
+        return "{'status':'success'}";
     }
 
 }

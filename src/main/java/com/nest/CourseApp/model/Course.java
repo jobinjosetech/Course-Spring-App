@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 public class Course {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     private int id;
     private String title;
     private String description;
